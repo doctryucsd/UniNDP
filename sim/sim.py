@@ -11,7 +11,14 @@ tqdm_copy = tqdm.tqdm # store it if you want to use it later
 def tqdm_replacement(iterable_object,*args,**kwargs):
     return iterable_object
 
-def sim(commands, silent=False, filename=None, sim_verify = False, use_tqdm = True):
+def sim(
+    commands,
+    silent=False,
+    filename=None,
+    sim_verify=False,
+    use_tqdm=True,
+    log_commands=True,
+):
     
     # set up sim config
     # SimConfig.read_from_yaml('./config/all_feature.yaml')
@@ -77,7 +84,7 @@ def sim(commands, silent=False, filename=None, sim_verify = False, use_tqdm = Tr
             queue.issue_inst(issue_group)
             queue.clear_empty_group(issue_group)
             # hardware
-            if not silent: 
+            if not silent and log_commands:
                 tqdm.tqdm.write(f"tick: {add_tick}, group: {issue_group}, cmd: {issue_cmd}")
             HW.issue_inst(issue_cmd, issue_group)
             # log
